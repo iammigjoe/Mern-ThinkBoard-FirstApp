@@ -15,13 +15,13 @@ const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
 // Middleware
-if (process.env.NODE_ENV !== "production") {
-  app.use(
-    cors({
-      origin: "http://localhost:5173"
-    })
-  );
-}
+app.use(
+  cors({
+    origin: process.env.NODE_ENV === "production" 
+      ? process.env.FRONTEND_URL || "*" 
+      : "http://localhost:5173"
+  })
+);
 app.use(express.json());
 app.use(rateLimiter)
 
